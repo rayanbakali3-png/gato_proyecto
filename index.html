@@ -1,1 +1,89 @@
+html<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Gato del Teclado</title>
+    <style>
+        body {
+            background-color: #222;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .gato-contenedor {
+            text-align: center;
+        }
+        /* Dibujo simple del gato con CSS */
+        .gato {
+            width: 150px;
+            height: 120px;
+            background-color: #fff;
+            border-radius: 50% 50% 40% 40%;
+            position: relative;
+            margin-bottom: 20px;
+            transition: transform 0.05s;
+        }
+        /* Orejas */
+        .gato::before, .gato::after {
+            content: '';
+            position: absolute;
+            top: -15px;
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-bottom: 30px solid #fff;
+        }
+        .gato::before { left: 15px; transform: rotate(-20deg); }
+        .gato::after { right: 15px; transform: rotate(20deg); }
+        /* Patas del gato */
+        .pata {
+            position: absolute;
+            bottom: -10px;
+            width: 30px;
+            height: 20px;
+            background-color: #ddd;
+            border-radius: 10px;
+            transition: transform 0.05s;
+        }
+        .pata-izq { left: 25px; }
+        .pata-der { right: 25px; }
+        /* Animación cuando presionas teclas */
+        .presionando .pata-izq { transform: translateY(-15px) scaleY(1.2); }
+        .presionando .pata-der { transform: translateY(-10px) scaleY(1.2); }
+        .presionando { transform: scaleY(0.95); }
+    </style>
+</head>
+<body>
 
+    <div class="gato-contenedor">
+        <div id="miGato" class="gato">
+            <div class="pata pata-izq"></div>
+            <div class="pata pata-der"></div>
+        </div>
+        <h2>¡Escribe en tu teclado para que el gato se mueva!</h2>
+        <p>Tecla presionada: <span id="tecla">Ninguna</span></p>
+    </div>
+
+    <script>
+        const gato = document.getElementById('miGato');
+        const textoTecla = document.getElementById('tecla');
+
+        // Escucha cuando presionas una tecla
+        window.addEventListener('keydown', (evento) => {
+            gato.classList.add('presionando');
+            textoTecla.innerText = evento.key === ' ' ? 'Espacio' : evento.key;
+        });
+
+        // Escucha cuando sueltas la tecla
+        window.addEventListener('keyup', () => {
+            gato.classList.remove('presionando');
+        });
+    </script>
+</body>
+</html>
